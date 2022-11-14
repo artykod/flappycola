@@ -8,7 +8,15 @@ public class UiViewModel : DataSource, IUiViewModel
 
     public event Action Disposed;
 
-    public UiViewModel()
+    public UiViewModel() : this((string)null)
+    { }
+
+    public UiViewModel(IDataSource dataSource) : this(dataSource?.Name ?? null)
+    {
+        PatchWith(dataSource);
+    }
+
+    public UiViewModel(string name) : base(name)
     {
         foreach (var f in GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
         {

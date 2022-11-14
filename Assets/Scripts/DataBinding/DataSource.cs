@@ -13,6 +13,7 @@ namespace DataBinding
         void ForEach<T>(Action<T> action) where T : IDataNode;
         T FirstOrDefault<T>(Func<T, bool> predicate) where T: IDataNode;
         T GetDataValueOrDefault<T>(string nodePath);
+        void PatchWith(IDataSource dataSource);
 
         static ulong HashNodeName(string value)
         {
@@ -49,15 +50,13 @@ namespace DataBinding
 
         public string Name => _name;
 
-        public DataSource()
-        {
-            _name = GetType().Name;
-            _dataNodes = new Dictionary<ulong, IDataNode>();
-        }
+        public DataSource() : this(null)
+        { }
 
-        public DataSource(string name) : this()
+        public DataSource(string name)
         {
-            _name = name;
+            _name = name ?? GetType().Name;
+            _dataNodes = new Dictionary<ulong, IDataNode>();
         }
 
         public void AddNode(IDataNode node)
@@ -188,6 +187,25 @@ namespace DataBinding
         public void Unsubscribe(IDataObservator subscriber)
         {
             _subscriberContainer?.Unsubscribe(subscriber);
+        }
+
+        public IDataNode Clone(string name)
+        {
+            var dataSource = new DataSource(name);
+
+            foreach (var kvp in _dataNodes)
+            {
+                var node = kvp.Value;
+
+                dataSource.AddNode(node.Clone(node.Name));
+            }
+
+            return dataSource;
+        }
+
+        public void PatchWith(IDataSource dataSource)
+        {
+            dataSource?.ForEach<IDataNode>(i => AddNode(i.Clone(i.Name)));
         }
     }
 }

@@ -35,5 +35,10 @@ namespace DataBinding
 
         public void Subscribe(IDataObservator subscriber) {}
         public void Unsubscribe(IDataObservator subscriber) {}
+
+        public IDataNode Clone(string name)
+        {
+            return new CommandProperty(name, _action);
+        }
     }
 }

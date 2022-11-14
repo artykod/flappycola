@@ -6,5 +6,7 @@ namespace DataBinding
 
         void Subscribe(IDataObservator subscriber);
         void Unsubscribe(IDataObservator subscriber);
+
+        IDataNode Clone(string name);
     }
 }

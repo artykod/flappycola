@@ -59,5 +59,10 @@ namespace DataBinding
         {
             _subscriberContainer?.Unsubscribe(subscriber);
         }
+
+        public IDataNode Clone(string name)
+        {
+            return new DataProperty<T>(name, _data);
+        }
     }
 }

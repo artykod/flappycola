@@ -1,17 +1,37 @@
 {
-	"flappyConfig":
-	{
-		"gravity": -18.0,
-		"jump": 8.0,
-		"levelSpeed": 4.0,
-		"levelSpeedAcceleration": 0.25,
-		"levelSpeedAccelerationTimeInterval": 5.0,
-		"scoreAddIntervalSeconds": 2.0,
-		"obstaclesDistance": 5.0,
-		"obstaclesHeightMin": -3.0,
-		"obstaclesHeightMax": 3.0,
-		"maxPlayerScore": 9,
-		"immortalTimeAfterGroundDeath": 3.0,
-		"startGameTimer": 3.0
-	}
+	"flappyConfigs":
+	[
+		{
+			"id": 0,
+			"label": "Normal",
+			"gravity": -18.0,
+			"jump": 8.0,
+			"levelSpeed": 4.0,
+			"levelSpeedAcceleration": 0.25,
+			"levelSpeedAccelerationTimeInterval": 5.0,
+			"scoreAddIntervalSeconds": 2.0,
+			"obstaclesDistance": 5.0,
+			"obstaclesHeightMin": -3.0,
+			"obstaclesHeightMax": 3.0,
+			"maxPlayerScore": 9,
+			"immortalTimeAfterGroundDeath": 3.0,
+			"startGameTimer": 3.0
+		},
+		{
+			"id": 1,
+			"label": "Hard",
+			"gravity": -20.0,
+			"jump": 10.0,
+			"levelSpeed": 6.0,
+			"levelSpeedAcceleration": 0.3,
+			"levelSpeedAccelerationTimeInterval": 6.0,
+			"scoreAddIntervalSeconds": 3.0,
+			"obstaclesDistance": 4.0,
+			"obstaclesHeightMin": -3.0,
+			"obstaclesHeightMax": 3.0,
+			"maxPlayerScore": 12,
+			"immortalTimeAfterGroundDeath": 3.0,
+			"startGameTimer": 3.0
+		}
+	]
 }
