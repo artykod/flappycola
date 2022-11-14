@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1484713896377062080}
   - component: {fileID: 5982250729951289683}
   - component: {fileID: 3914293410447653638}
+  - component: {fileID: 4305884480036647651}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -135,6 +136,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4305884480036647651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138541032067553557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19bfd293b5a644a791db7c74aaf84c3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 0}
+  _path: level
 --- !u!1 &2752230148874679394
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,6 +162,7 @@ GameObject:
   - component: {fileID: 7351743618563470296}
   - component: {fileID: 4248534340839522171}
   - component: {fileID: 8791855296253787108}
+  - component: {fileID: 417520735820052072}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -257,6 +273,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &417520735820052072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2752230148874679394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9afdb08df704ba9b9f88ab537b85f21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _path: levelClick
 --- !u!1 &4320423850739877306
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,8 +466,9 @@ GameObject:
   - component: {fileID: 4320423850944974942}
   - component: {fileID: 4320423850944974941}
   - component: {fileID: 4320423850944974940}
+  - component: {fileID: 3905560133285109053}
   m_Layer: 5
-  m_Name: WorldMap
+  m_Name: UiWorldMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -526,6 +556,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3905560133285109053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4320423850944974939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31109338693cf4df9827881c3a77fe84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4320423851524615574
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,10 +2,12 @@ using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using DataBinding;
 
 public class UiView : IUiView
 {
     private GameObject _viewInstance;
+    private DataContext _dataContext;
     private bool _disposing;
     private IUiViewModel _viewModel;
 
@@ -24,14 +26,15 @@ public class UiView : IUiView
 
             _viewInstance = GameObject.Instantiate(op.Result);
 
+            _dataContext = _viewInstance.GetComponent<DataContext>();
+
+            BindToViewModel();
+
             OnInitialize(_viewInstance);
 
             Initialized?.Invoke(this);
         }
     }
-
-    protected virtual void OnInitialize(GameObject viewInstance)
-    {}
 
     public void Dispose()
     {
@@ -41,6 +44,8 @@ public class UiView : IUiView
         }
 
         _disposing = true;
+
+        OnDispose();
 
         if (_viewInstance != null)
         {
@@ -70,5 +75,18 @@ public class UiView : IUiView
         {
             _viewModel.Disposed += Dispose;
         }
+
+        BindToViewModel();
     }
+
+    private void BindToViewModel()
+    {
+        if (_dataContext != null)
+        {
+            _dataContext.SetDataSource(_viewModel);
+        }
+    }
+
+    protected virtual void OnInitialize(GameObject viewInstance) { }
+    protected virtual void OnDispose() { }
 }

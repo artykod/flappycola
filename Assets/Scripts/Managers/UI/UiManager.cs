@@ -45,7 +45,7 @@ public class UiManager : IUiManager
     {
         if (TryGetByTag(tag, out var viewModel))
         {
-            viewModel.Dispose();
+            Close(viewModel);
         }
     }
 

@@ -1,10 +1,15 @@
 using System;
+using DataBinding;
 
-public class UiViewModel : IUiViewModel
+public class UiViewModel : DataSource, IUiViewModel
 {
     private bool _disposing;
 
     public event Action Disposed;
+
+    public UiViewModel() : base()
+    {
+    }
 
     public void Dispose()
     {
@@ -17,4 +22,6 @@ public class UiViewModel : IUiViewModel
 
         Disposed?.Invoke();
     }
+
+    protected virtual void OnDispose() {}
 }

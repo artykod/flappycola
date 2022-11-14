@@ -11,7 +11,7 @@ public class ShowPreloaderState : BaseGameState
     {
         base.Enter();
 
-        _session.Managers.UiManager.Open(new UiPreloaderViewModel(), new UiView(UiNames.Preloader), UiNames.Preloader);
+        _session.Managers.UiManager.Open(new UiPreloaderViewModel(), new UiView(UiCommonNames.Preloader), UiCommonNames.Preloader);
 
         _session.GameStateFsm.GoToState(new LoadGameConfigState(_session));
     }

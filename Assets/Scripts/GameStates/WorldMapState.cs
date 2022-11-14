@@ -13,9 +13,9 @@ public class WorldMapState : BaseGameState
     {
         base.Enter();
 
-        var view = new UiWorldMapView(_session, UiNames.WorldMap);
+        var view = new UiView("UI/WorldMap");
         
-        _worldMapViewModel = new UiWorldMapViewModel();
+        _worldMapViewModel = new UiWorldMapViewModel(_session);
 
         _session.Managers.UiManager.Open(_worldMapViewModel, view);
 
@@ -26,7 +26,7 @@ public class WorldMapState : BaseGameState
     {
         view.Initialized -= WorldMapInitialized;
 
-        _session.Managers.UiManager.CloseByTag(UiNames.Preloader);
+        _session.Managers.UiManager.CloseByTag(UiCommonNames.Preloader);
     }
 
     public override void Exit()

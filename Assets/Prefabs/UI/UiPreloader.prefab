@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 7026909735910828133}
   - component: {fileID: 7026909735910828130}
   m_Layer: 5
-  m_Name: Preloader
+  m_Name: UiPreloader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
