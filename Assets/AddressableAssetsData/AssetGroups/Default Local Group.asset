@@ -29,6 +29,18 @@ MonoBehaviour:
     m_Address: UI/WorldMap
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: fe4c35195c6bc4f3786467af231ed5b8
+    m_Address: UI/FlappyGame
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f0a510e9390894d6f92dab42914ee4ef
+    m_Address: UI/FlappyResult
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d51da02d2a5f444e9bc045420984bc8d
+    m_Address: FlappyGame
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 628d684cf1af042f48cf1c3a3142358c, type: 2}
   m_SchemaSet:

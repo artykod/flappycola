@@ -8,5 +8,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: a2485388c84504a91b97b321aeaddbfd
+  - enabled: 1
+    path: Assets/Flappy/scenes/0_start.unity
+    guid: 255de8fc62bf49e44ad8848bfcc20cc7
+  - enabled: 1
+    path: Assets/Flappy/scenes/1_game.unity
+    guid: 674b1cf7114168a428e5fffea465c7dd
+  - enabled: 1
+    path: Assets/Flappy/scenes/2_result.unity
+    guid: 43b6bf94dc17bd14f8f05938155aad9c
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: bd92a4de4a33f456c93a361bf54762d7, type: 2}
