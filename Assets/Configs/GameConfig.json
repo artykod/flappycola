@@ -1,7 +1,6 @@
 {
 	"flappyConfig":
 	{
-		"resultsShowTime": 2.0,
 		"gravity": -18.0,
 		"jump": 8.0,
 		"levelSpeed": 4.0,

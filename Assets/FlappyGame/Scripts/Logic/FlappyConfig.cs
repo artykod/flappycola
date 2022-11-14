@@ -2,7 +2,6 @@ using DataBinding;
 
 public class FlappyConfig
 {
-    public readonly float ResultsShowTime;
 	public readonly float Gravity;
 	public readonly float Jump;
 	public readonly float LevelSpeed;
@@ -18,7 +17,6 @@ public class FlappyConfig
 
     public FlappyConfig(IDataSource config)
     {
-		ResultsShowTime = config.GetDataValueOrDefault<float>("resultsShowTime");
 		Gravity = config.GetDataValueOrDefault<float>("gravity");
 		Jump = config.GetDataValueOrDefault<float>("jump");
 		LevelSpeed = config.GetDataValueOrDefault<float>("levelSpeed");
