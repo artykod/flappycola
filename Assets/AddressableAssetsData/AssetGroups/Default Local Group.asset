@@ -41,6 +41,10 @@ MonoBehaviour:
     m_Address: FlappyGame
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 4ad489935f2f4411abf3c1f2ccd47a23
+    m_Address: UI/SkinSelect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 628d684cf1af042f48cf1c3a3142358c, type: 2}
   m_SchemaSet:

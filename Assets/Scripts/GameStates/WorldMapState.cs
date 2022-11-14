@@ -17,7 +17,7 @@ public class WorldMapState : BaseGameState
         
         _worldMapViewModel = new UiWorldMapViewModel(_session);
 
-        _session.Managers.UiManager.Open(_worldMapViewModel, view);
+        _session.Managers.Ui.Open(_worldMapViewModel, view);
 
         view.Initialized += WorldMapInitialized;
     }
@@ -26,13 +26,13 @@ public class WorldMapState : BaseGameState
     {
         view.Initialized -= WorldMapInitialized;
 
-        _session.Managers.UiManager.CloseByTag(UiCommonNames.Preloader);
+        _session.Managers.Ui.CloseByTag(UiCommonNames.Preloader);
     }
 
     public override void Exit()
     {
         base.Exit();
 
-        _session.Managers.UiManager.Close(_worldMapViewModel);
+        _session.Managers.Ui.Close(_worldMapViewModel);
     }
 }

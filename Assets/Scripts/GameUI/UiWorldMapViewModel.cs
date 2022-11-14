@@ -5,18 +5,29 @@ public class UiWorldMapViewModel : UiViewModel
     private readonly Session _session;
 
     [AutoCreate] private readonly DataSource FlappyLevels;
+    [AutoCreate] private readonly CommandProperty SkinsClick;
 
     public UiWorldMapViewModel(Session session)
     {
         _session = session;
 
-        if (session.GameConfig.Data.TryGetNode<IDataSource>("flappyConfigs", out var flappyConfigs))
+        if (session.GameConfig.Data.TryGetNode<IDataSource>("flappyLevels", out var flappyLevels))
         {
-            flappyConfigs.ForEach<IDataSource>(levelConfig =>
+            flappyLevels.ForEach<IDataSource>(levelConfig =>
             {
                 FlappyLevels.AddNode(new UiFlappyLevelViewModel(_session, levelConfig));
             });
         }
+
+        SkinsClick.SetAction(OnSkinsClick);
+    }
+
+    private void OnSkinsClick(IDataSource _)
+    {
+        var viewModel = new UiSkinSelectViewModel(_session);
+        var view = new UiView("UI/SkinSelect");
+
+        _session.Managers.Ui.Open(viewModel, view);
     }
 
     private class UiFlappyLevelViewModel : UiViewModel

@@ -23,7 +23,7 @@ public class FlappyGameState : BaseGameState
         _viewModel = new UiFlappyGameViewModel(_session);
         var view = new UiView("UI/FlappyGame");
 
-		_session.Managers.UiManager.Open(_viewModel, view);
+		_session.Managers.Ui.Open(_viewModel, view);
 
         Addressables.LoadAssetAsync<GameObject>("FlappyGame").Completed += OnGameFieldLoaded;
     }
@@ -32,9 +32,11 @@ public class FlappyGameState : BaseGameState
     {
         op.Completed -= OnGameFieldLoaded;
 
+        var skinId = _session.Managers.Progress.SkinId ?? "1";
+
         var players = new[]
         {
-            new PlayerInfo("player_1_guid", "1", "Test1", 0),
+            new PlayerInfo("player_1_guid", skinId, "Test1", 0),
         };
 
         _game = GameObject.Instantiate(op.Result).GetComponent<FlappyGame>();
@@ -58,6 +60,6 @@ public class FlappyGameState : BaseGameState
 
         GameObject.Destroy(_game.gameObject);
 
-        _session.Managers.UiManager.Close(_viewModel);
+        _session.Managers.Ui.Close(_viewModel);
     }
 }

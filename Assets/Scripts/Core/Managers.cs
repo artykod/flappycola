@@ -4,7 +4,8 @@ public class Managers : IDisposable
 {
     private readonly Session _session;
 
-    public IUiManager UiManager { get; private set; }
+    public IUiManager Ui { get; private set; }
+    public IProgressManager Progress { get; private set; }
 
     public Managers(Session session)
     {
@@ -15,11 +16,13 @@ public class Managers : IDisposable
 
     public void Dispose()
     {
-        UiManager?.Dispose();
+        Ui?.Dispose();
+        Progress?.Dispose();
     }
 
     private void CreateInitialManagers()
     {
-        UiManager = new UiManager();
+        Ui = new UiManager();
+        Progress = new PersistentProgressManager();
     }
 }

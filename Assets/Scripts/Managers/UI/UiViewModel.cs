@@ -18,7 +18,7 @@ public class UiViewModel : DataSource, IUiViewModel
 
     public UiViewModel(string name) : base(name)
     {
-        foreach (var f in GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
+        foreach (var f in GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
         {
             var autoCreateAttribute = f.GetCustomAttribute<AutoCreateAttribute>(false);
 

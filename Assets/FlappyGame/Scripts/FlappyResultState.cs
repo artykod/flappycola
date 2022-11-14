@@ -20,13 +20,13 @@ public class FlappyResultState : BaseGameState
         _viewModel = new UiFlappyResultViewModel(_session, _players);
         var view = new UiView("UI/FlappyResult");
 
-        _session.Managers.UiManager.Open(_viewModel, view);
+        _session.Managers.Ui.Open(_viewModel, view);
     }
 
     public override void Exit()
     {
         base.Exit();
 
-        _session.Managers.UiManager.Close(_viewModel);
+        _session.Managers.Ui.Close(_viewModel);
     }
 }
