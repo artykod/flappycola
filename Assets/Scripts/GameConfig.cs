@@ -6,6 +6,6 @@ public class GameConfig
 
     public GameConfig(string jsonString)
     {
-		Data = DataSourceFactory.FromJson("gameConfig", jsonString);
+        Data = DataSourceFactory.FromJson("gameConfig", jsonString);
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-
 public class FlappyResultState : BaseGameState
 {
     private readonly Session _session;
@@ -19,19 +17,10 @@ public class FlappyResultState : BaseGameState
     {
         base.Enter();
 
-        _viewModel = new UiFlappyResultViewModel(_players);
+        _viewModel = new UiFlappyResultViewModel(_session, _players);
         var view = new UiView("UI/FlappyResult");
 
         _session.Managers.UiManager.Open(_viewModel, view);
-
-        _session.AsyncProvider.StartAsync(ReturnToWorldMapAfterDelay());
-
-        IEnumerator ReturnToWorldMapAfterDelay()
-        {
-            yield return new UnityEngine.WaitForSeconds(_config.ResultsShowTime);
-
-            _session.GameStateFsm.GoToState(new WorldMapState(_session));
-        }
     }
 
     public override void Exit()

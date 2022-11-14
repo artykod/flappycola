@@ -22,6 +22,7 @@ public class FlappyGame : MonoBehaviour
 	}
 
 	public event Action<bool> OnPause;
+	public event Action<FlappyGame> OnGameFinish;
 
 	public float StartTimer { get; private set; }
 	public float LevelSpeed { get; private set; }
@@ -178,10 +179,7 @@ public class FlappyGame : MonoBehaviour
 
 		_isMatchStarted = false;
 
-		StartCoroutine(InvokeAfterDelay(1f, () =>
-		{
-			_session.GameStateFsm.GoToState(new FlappyResultState(_session, _config, CurrentPlayers));
-		}));
+		StartCoroutine(InvokeAfterDelay(1f, () => OnGameFinish?.Invoke(this)));
 	}
 
 	private IEnumerator InvokeAfterDelay(float delay, System.Action action)

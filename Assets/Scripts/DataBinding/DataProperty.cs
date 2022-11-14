@@ -26,6 +26,9 @@ namespace DataBinding
             SetValue(data);
         }
 
+        public DataProperty(string name) : this(name, default)
+        { }
+
         public Type NativeType => typeof(T);
 
         public ValueT GetValue<ValueT>()

@@ -149,7 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 0}
-  _path: level
+  _textUnity: {fileID: 0}
+  _path: Level
 --- !u!1 &2752230148874679394
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9afdb08df704ba9b9f88ab537b85f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _path: levelClick
+  _path: LevelClick
 --- !u!1 &4320423850739877306
 GameObject:
   m_ObjectHideFlags: 0

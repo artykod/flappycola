@@ -48,7 +48,16 @@ public class FlappyGameState : BaseGameState
         _game = GameObject.Instantiate(op.Result).GetComponent<FlappyGame>();
         _game.Initialize(_session, _flappyConfig, players);
 
+        _game.OnGameFinish += OnFlappyGameFinish;
+
         _viewModel.AssignGame(_game);
+    }
+
+    private void OnFlappyGameFinish(FlappyGame game)
+    {
+        _game.OnGameFinish -= OnFlappyGameFinish;
+
+        _session.GameStateFsm.GoToState(new FlappyResultState(_session, _flappyConfig, game.CurrentPlayers));
     }
 
     public override void Exit()

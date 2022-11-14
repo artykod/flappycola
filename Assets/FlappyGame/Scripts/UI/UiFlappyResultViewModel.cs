@@ -3,24 +3,35 @@ using DataBinding;
 
 public class UiFlappyResultViewModel : UiViewModel
 {
-    public UiFlappyResultViewModel(PlayersCollection players)
+    private readonly Session _session;
+
+    [AutoCreate] private readonly DataSource Players;
+    [AutoCreate] private readonly CommandProperty ContinueClick;
+
+    public UiFlappyResultViewModel(Session session, PlayersCollection players)
     {
+        _session = session;
+
         var sortedPlayers = new List<PlayerInfo>(players);
 
 		sortedPlayers.Sort((p1, p2) => p1.TotalScores.CompareTo(p2.TotalScores));
 
-        var playersDataSource = new DataSource("players");
-
         for (int i = 0, l = sortedPlayers.Count; i < l; ++i)
         {
-            var playerDataSource = new DataSource($"{i}");
+            var player = new DataSource($"{i}");
+            var playerName = new DataProperty<string>("Name", sortedPlayers[i].PlayerName);
+            var playerScore = new DataProperty<int>("Score", sortedPlayers[i].TotalScores);
 
-            playerDataSource.AddNode(new DataProperty<string>("name", sortedPlayers[i].PlayerName));
-            playerDataSource.AddNode(new DataProperty<int>("score", sortedPlayers[i].TotalScores));
-
-            playersDataSource.AddNode(playerDataSource);
+            Players.AddNode(player);
+            player.AddNode(playerName);
+            player.AddNode(playerScore);
         }
 
-        AddNode(playersDataSource);
+        ContinueClick.SetAction(OnContinueClick);
+    }
+
+    private void OnContinueClick(IDataSource _)
+    {
+        _session.GameStateFsm.GoToState(new WorldMapState(_session));
     }
 }

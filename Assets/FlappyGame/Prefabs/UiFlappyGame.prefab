@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvasGroup: {fileID: 0}
-  _path: startScreenOpacity
+  _path: StartScreenOpacity
 --- !u!1 &8589884077694578228
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31c94ed7bdd420f8ec89a3e720de58c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _path: isPause
+  _path: IsPause
   _invert: 0
 --- !u!1 &8589884077927295688
 GameObject:
@@ -652,4 +652,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 0}
-  _path: startScreenText
+  _textUnity: {fileID: 0}
+  _path: StartScreenText

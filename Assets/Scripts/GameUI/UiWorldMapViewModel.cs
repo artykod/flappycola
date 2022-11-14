@@ -4,12 +4,15 @@ public class UiWorldMapViewModel : UiViewModel
 {
     private readonly Session _session;
 
+    [AutoCreate] private readonly DataProperty<string> Level;
+    [AutoCreate] private readonly CommandProperty LevelClick;
+
     public UiWorldMapViewModel(Session session)
     {
         _session = session;
 
-        AddNode(new DataProperty<string>("level", "Level 1"));
-        AddNode(new CommandProperty("levelClick", OnLevelClick));
+        Level.SetValue<string>("Level 1");
+        LevelClick.SetAction(OnLevelClick);
     }
 
     private void OnLevelClick(IDataSource _)

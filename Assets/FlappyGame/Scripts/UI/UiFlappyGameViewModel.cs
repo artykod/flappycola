@@ -4,9 +4,10 @@ using DataBinding;
 public class UiFlappyGameViewModel : UiViewModel
 {
     private readonly Session _session;
-    private readonly DataProperty<bool> IsPause;
-    private readonly DataProperty<string> StartScreenText;
-    private readonly DataProperty<float> StartScreenOpacity;
+
+    [AutoCreate] private readonly DataProperty<bool> IsPause;
+    [AutoCreate] private readonly DataProperty<string> StartScreenText;
+    [AutoCreate] private readonly DataProperty<float> StartScreenOpacity;
 
     private FlappyGame _game;
 
@@ -14,9 +15,7 @@ public class UiFlappyGameViewModel : UiViewModel
     {
         _session = session;
 
-        AddNode(IsPause = new DataProperty<bool>("isPause", false));
-        AddNode(StartScreenText = new DataProperty<string>("startScreenText", default));
-        AddNode(StartScreenOpacity = new DataProperty<float>("startScreenOpacity", 1f));
+        StartScreenOpacity.SetValue(1f);
     }
 
     public void AssignGame(FlappyGame game)
@@ -50,7 +49,7 @@ public class UiFlappyGameViewModel : UiViewModel
 
             if (time > -1)
             {
-                StartScreenText.SetValue<string>(time <= 0 ? "FLY!" : time.ToString());
+                StartScreenText.SetValue(time <= 0 ? "FLY!" : time.ToString());
             }
 
             if (time < 1)
@@ -59,7 +58,7 @@ public class UiFlappyGameViewModel : UiViewModel
 
                 opacity = UnityEngine.Mathf.Max(0f, opacity - UnityEngine.Time.deltaTime * 0.5f);
 
-                StartScreenOpacity.SetValue<float>(opacity);
+                StartScreenOpacity.SetValue(opacity);
 
                 if (opacity <= float.Epsilon)
                 {
