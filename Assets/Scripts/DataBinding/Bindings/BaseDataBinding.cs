@@ -29,19 +29,21 @@ namespace DataBinding
 
         private void TrackDataContext()
         {
-            var actualDataContext = GetComponentInParent<DataContext>(true);
-            var actualDataSource = actualDataContext != null ? actualDataContext.DataSource : null;
+            if (DataContext == null)
+            {
+                DataContext = GetComponentInParent<DataContext>(true);
+            }
 
-            DataContext = actualDataContext;
+            var dataSource = DataContext != null ? DataContext.DataSource : null;
 
-            if (_dataSource == actualDataSource)
+            if (_dataSource == dataSource)
             {
                 return;
             }
 
             UnsubscribeFromDataSourceChanges();
 
-            _dataSource = actualDataSource;
+            _dataSource = dataSource;
 
             SubscribeToDataSourceChanges();
 
