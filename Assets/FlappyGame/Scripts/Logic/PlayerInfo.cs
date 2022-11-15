@@ -16,7 +16,8 @@ public class PlayerInfo
 	public int Scores { get; private set; }
 	public int TotalScores { get; private set; }
 	public bool IsFinished { get; private set; }
-	public int Lifes { get; private set; }
+	public int Lives { get; private set; }
+	public int MaxLives { get; private set; }
 
 	public void AddScores(int scores, int maxScore)
 	{
@@ -31,9 +32,12 @@ public class PlayerInfo
 		if (Scores > maxScore)
 		{
 			Scores = 0;
-			Lifes++;
 
-			OnLifeChange?.Invoke(+1);
+			if (Lives < MaxLives)
+			{
+				Lives++;
+				OnLifeChange?.Invoke(1);
+			}
 		}
 	}
 
@@ -49,11 +53,11 @@ public class PlayerInfo
 	{
 		if (!IsFinished)
 		{
-			Lifes--;
+			Lives--;
 
 			OnLifeChange?.Invoke(-1);
 
-			if (Lifes < 1)
+			if (Lives < 1)
 			{
 				IsFinished = true;
 
@@ -66,19 +70,22 @@ public class PlayerInfo
 		return false;
 	}
 
-	public PlayerInfo(string guid, string characterId, string playerName, int jumpKey) 
+	public PlayerInfo(string guid, string characterId, string playerName, int jumpKey, int startLives, int maxLives) 
 	{
 		Guid = guid;
 		CharacterId = characterId;
 		PlayerName = playerName;
 		JumpKey = jumpKey;
-		Lifes = 1;
+		Lives = startLives;
+		MaxLives = maxLives;
 	}
 }
 
 public struct PlayersCollection : IEnumerable<PlayerInfo>
 {
 	private readonly Dictionary<string, PlayerInfo> _players;
+
+	public int Count => _players.Count;
 
 	public PlayersCollection(Dictionary<string, PlayerInfo> players)
 	{

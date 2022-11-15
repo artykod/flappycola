@@ -83,14 +83,15 @@ public class FlappyGame : MonoBehaviour
 
 		foreach (var i in CurrentPlayers)
 		{
-			var player = Instantiate(playerPrefab, new Vector3(xOffset, 0f, 0f), Quaternion.identity, transform);
+			var player = Instantiate(playerPrefab, new Vector3(xOffset, 0f), Quaternion.identity, transform);
 
 			player.gameObject.SetActive(true);
 			player.OnFinish += OnPlayerFinish;
 			player.Initialize(_session, this, _config, i);
-			xOffset += 3f;
 
 			_players.Add(i.Guid, player);
+
+			xOffset += 3f;
 		}
 	}
 

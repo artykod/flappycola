@@ -15,14 +15,12 @@ public class Player : MonoBehaviour
 	private float _startIdleDelay = 2f;
 	private bool _startedPlay = false;
 	private float _velocity = 0f;
-	private PlayerInfo _selfPlayerInfo = null;
+	private PlayerInfo _selfPlayerInfo;
 	private PlayerVisual _playerVisual;
 	private Collider2D _lastCollider;
 	private readonly List<BubblePlayerDie> _bubbles = new List<BubblePlayerDie>(100);
 
 	private float _immortalTime;
-	private float _totalLiveTime;
-	private float _totalLiveTimePrevious;
 
 	public PlayerInfo SelfPlayerInfo => _selfPlayerInfo;
 
@@ -72,7 +70,6 @@ public class Player : MonoBehaviour
 		}
 
 		_immortalTime = 0f;
-		_totalLiveTime = 0f;
 	}
 
 	private void Jump()
@@ -99,17 +96,16 @@ public class Player : MonoBehaviour
 		_playerVisual.PlayLife(changeValue);
 	}
 
-	public bool DoneObstacle(Obstacle obstacle) {
-
-		// scores by done obstacles
-
-		/*int reward = obstacle.TakeRewardForPlayer(selfPlayerInfo.Guid);
+	public bool DoneObstacle(Obstacle obstacle)
+	{
+		var reward = obstacle.TakeRewardForPlayer(_selfPlayerInfo.Guid);
 
 		if (reward != 0)
 		{
-			selfPlayerInfo.AddScores(reward);
+			_selfPlayerInfo.AddScores(reward, _config.MaxPlayerScore);
+
 			return true;
-		}*/
+		}
 
 		return false;
 	}
@@ -139,16 +135,6 @@ public class Player : MonoBehaviour
 		if (_immortalTime > 0f)
 		{
 			_immortalTime -= Time.deltaTime;
-		}
-
-		_totalLiveTime += Time.deltaTime;
-
-		var diff = _totalLiveTime - _totalLiveTimePrevious;
-
-		if (diff >= _config.ScoreAddIntervalSeconds)
-		{
-			_selfPlayerInfo.AddScores(1, _config.MaxPlayerScore);
-			_totalLiveTimePrevious = _totalLiveTime;
 		}
 	}
 
@@ -198,31 +184,7 @@ public class Player : MonoBehaviour
 
 		if (_immortalTime <= 0f || isGround) {
 
-			var collision = true;
-
-			/*if (!isGround)
-			{
-				var box = collider as BoxCollider2D;
-				var self = selfCollider;
-
-				if (box != null && self != null)
-				{
-					var pos = transform.position;
-					var boxSize = (box.size + self.size) * 0.5f;
-					var boxPos = box.transform.position;
-					var diff = pos - boxPos;
-
-					if (boxSize.y - Mathf.Abs(diff.y) < 0.5f)
-					{
-						collision = false;
-					}
-				}
-			}*/
-
-			if (collision)
-			{
-				Finish();
-			}
+			Finish();
 		}
 
 		if (!enabled)
@@ -230,11 +192,12 @@ public class Player : MonoBehaviour
 			return;
 		}
 
-		if (SelfPlayerInfo.Lifes > 0 && isGround)
+		if (SelfPlayerInfo.Lives > 0 && isGround)
 		{
 			var pos = transform.position;
 			pos.y = 0f;
 			transform.position = pos;
+
 			_velocity = 0f;
 			_lastCollider = null;
 

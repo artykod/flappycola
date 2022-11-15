@@ -32,11 +32,16 @@ public class FlappyGameState : BaseGameState
     {
         op.Completed -= OnGameFieldLoaded;
 
+        var playerGuid = "player_1_guid";
+        var playerName = "Player 1";
+        var playerJumpKey = 0;
         var skinId = _session.Managers.Progress.SkinId ?? "1";
+        var startLives = _flappyConfig.PlayerStartLives;
+        var maxLives = _flappyConfig.MaxPlayerLives;
 
         var players = new[]
         {
-            new PlayerInfo("player_1_guid", skinId, "Test1", 0),
+            new PlayerInfo(playerGuid, skinId, playerName, playerJumpKey, startLives, maxLives),
         };
 
         _game = GameObject.Instantiate(op.Result).GetComponent<FlappyGame>();

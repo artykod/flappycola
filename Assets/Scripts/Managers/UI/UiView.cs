@@ -81,7 +81,7 @@ public class UiView : IUiView
 
     private void BindToViewModel()
     {
-        if (_dataContext != null)
+        if (_dataContext != null && _viewModel != null)
         {
             _dataContext.SetDataSource(_viewModel);
         }
