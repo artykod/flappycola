@@ -23,6 +23,6 @@ public class Managers : IDisposable
     private void CreateInitialManagers()
     {
         Ui = new UiManager();
-        Progress = new PersistentProgressManager();
+        Progress = new PersistentProgressManager(_session);
     }
 }

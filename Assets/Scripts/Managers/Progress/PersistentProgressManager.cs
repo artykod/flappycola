@@ -7,15 +7,24 @@ public class PersistentProgressManager : IProgressManager
 {
     private const string PersistentProgressFileName = "progress";
 
+    private readonly Session _session;
+
     public string SkinId { get; set; }
 
-    public PersistentProgressManager()
+    public PersistentProgressManager(Session session)
     {
+        _session = session;
+
         Load();
     }
 
     public void Dispose()
     {
+    }
+
+    private void SetDefaultValues()
+    {
+        SkinId = _session.GameConfig.Data.GetDataValueOrDefault<string>("defaultFlappySkin");
     }
 
     private void Load()
@@ -28,7 +37,7 @@ public class PersistentProgressManager : IProgressManager
             var jsonString = persistentFileExists ? File.ReadAllText(persistentPath) : "{}";
             var json = JSON.Parse(jsonString);
 
-            SkinId = json.HasKey("skinId") ? json["skinId"] : "1";
+            SkinId = json.HasKey("skinId") ? json["skinId"] : SkinId;
 
             Debug.Log($"Progress from persistent: {json}");
         }

@@ -82,8 +82,8 @@ Material:
     - _StencilWriteMask: 255
     - _UVSec: 0
     - _Wrap: 0
-    - _WrapX: -0.104650654
-    - _WrapY: 0.5
+    - _WrapX: -0.3193119
+    - _WrapY: 0.33333334
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 0, b: 0, a: 1}

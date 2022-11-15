@@ -42,7 +42,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 4ad489935f2f4411abf3c1f2ccd47a23
-    m_Address: UI/SkinSelect
+    m_Address: UI/FlappySkinSelect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4c55f57be1d05438ab85651d5fad25fa
+    m_Address: FlappySkins/skin1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 564263332a35046c8824c77b2ed2adc0
+    m_Address: FlappySkins/skin2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4b7a69277f7404097a181e551c9ca35d
+    m_Address: FlappySkins/skin3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 55ee0f0d657154288a6b6ebfe4fcb109
+    m_Address: FlappySkins/skin4
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

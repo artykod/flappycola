@@ -33,5 +33,25 @@
 			"immortalTimeAfterGroundDeath": 3.0,
 			"startGameTimer": 3.0
 		}
+	],
+	"defaultFlappySkin": "FlappySkins/skin1",
+	"flappySkins":
+	[
+		{
+			"key": "FlappySkins/skin1",
+			"label": "Cola Glasses"
+		},
+		{
+			"key": "FlappySkins/skin2",
+			"label": "Cap Cola"
+		},
+		{
+			"key": "FlappySkins/skin3",
+			"label": "Hat Cola"
+		},
+		{
+			"key": "FlappySkins/skin4",
+			"label": "Cola Headphones"
+		}
 	]
 }

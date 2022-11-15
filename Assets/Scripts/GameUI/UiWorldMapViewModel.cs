@@ -24,8 +24,8 @@ public class UiWorldMapViewModel : UiViewModel
 
     private void OnSkinsClick(IDataSource _)
     {
-        var viewModel = new UiSkinSelectViewModel(_session);
-        var view = new UiView("UI/SkinSelect");
+        var viewModel = new UiFlappySkinSelectViewModel(_session);
+        var view = new UiView("UI/FlappySkinSelect");
 
         _session.Managers.Ui.Open(viewModel, view);
     }

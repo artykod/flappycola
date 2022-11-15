@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Collections;
 
 public class PlayerVisual : MonoBehaviour
@@ -8,15 +10,6 @@ public class PlayerVisual : MonoBehaviour
 	private const string TRIGGER_FALL = "fall";
 	private const string TRIGGER_DIE  = "die";
 
-	[System.Serializable]
-	public class SkinInfo
-	{
-		public string id = "";
-		public Sprite body = null;
-	}
-
-	[SerializeField] private SkinInfo[] skins;
-	[SerializeField] private SpriteRenderer bodyRenderer;
 	[SerializeField] private Animator lifeAnimator;
 	[SerializeField] private SpriteRenderer lifeSprite;
 	[SerializeField] private TextMesh lifeText;
@@ -28,51 +21,75 @@ public class PlayerVisual : MonoBehaviour
 	[SerializeField] private Material playerMaterial;
 	[SerializeField] private MeshRenderer scoreIcon;
 	[SerializeField] private PhysicsTriggerListener bodyTrigger;
+	[SerializeField] private Transform _bodyRoot;
 
 	public delegate void OnCollisionDelegate(Collider2D collider, BoxCollider2D selfCollider);
 	public event OnCollisionDelegate OnCollision;
 
 	private Animator _animator;
+	private Material _playerMaterialLocal;
+	private Material _scoreIconMaterialLocal;
 	private IEnumerator _immortalAnimation;
 	private float _scoreIconWaveOffset;
 
 	public void Initialize(Player player, string skinId)
 	{
-		_animator = GetComponent<Animator>();
+		_playerMaterialLocal = Instantiate(playerMaterial);
+		_scoreIconMaterialLocal = Instantiate(scoreIcon.sharedMaterial);
 
-		scoreIcon.sharedMaterial = Instantiate(scoreIcon.sharedMaterial);
+		ApplyLocalMaterial(gameObject, playerMaterial, _playerMaterialLocal);
+		ApplyLocalMaterial(scoreIcon.gameObject, scoreIcon.sharedMaterial, _scoreIconMaterialLocal);
 
 		scoreText.text = "";
 
-		RefreshScore(0, 0);
-
-		var cloneMaterial = Instantiate(playerMaterial);
-		var sr = gameObject.GetComponentsInChildren<SpriteRenderer>();
-
-		foreach (var i in sr)
-		{
-			if (i.sharedMaterial == playerMaterial)
-			{
-				i.sharedMaterial = cloneMaterial;
-			}
-		}
-
-		playerMaterial = cloneMaterial;
+		RefreshScore(0, int.MaxValue);
 
 		bodyTrigger.OnTriggerEnter += OnPhysicsTriggerEnter;
 
-		foreach (var i in skins)
-		{
-			if (skinId == i.id)
-			{
-				bodyRenderer.sprite = i.body;
+		Addressables.LoadAssetAsync<GameObject>(skinId).Completed += InitializePlayerSkin;
+	}
 
-				break;
+	private void OnDestroy()
+	{
+		Destroy(_playerMaterialLocal);
+		Destroy(_scoreIconMaterialLocal);
+	}
+
+	private void InitializePlayerSkin(AsyncOperationHandle<GameObject> asset)
+	{
+		asset.Completed -= InitializePlayerSkin;
+
+		var skinInstance = Instantiate(asset.Result, _bodyRoot, false);
+
+		_animator = skinInstance.GetComponent<Animator>();
+
+		ApplyLocalMaterial(skinInstance, playerMaterial, _playerMaterialLocal);
+	}
+
+	private void ApplyLocalMaterial(GameObject target, Material targetMaterial, Material localMaterial)
+	{
+		var sr = target.GetComponentsInChildren<SpriteRenderer>();
+
+		foreach (var i in sr)
+		{
+			if (i.sharedMaterial == targetMaterial)
+			{
+				i.sharedMaterial = localMaterial;
+			}
+		}
+
+		var mr = target.GetComponentsInChildren<MeshRenderer>();
+
+		foreach (var i in mr)
+		{
+			if (i.sharedMaterial == targetMaterial)
+			{
+				i.sharedMaterial = localMaterial;
 			}
 		}
 	}
 
-	void OnPhysicsTriggerEnter(Collider2D collider, Collider2D selfCollider)
+	private void OnPhysicsTriggerEnter(Collider2D collider, Collider2D selfCollider)
 	{
 		OnCollision?.Invoke(collider, selfCollider as BoxCollider2D);
 	}
@@ -82,7 +99,7 @@ public class PlayerVisual : MonoBehaviour
 		_scoreIconWaveOffset -= Time.deltaTime * 1.5f;
 		_scoreIconWaveOffset %= 1f;
 
-		scoreIcon.sharedMaterial.SetFloat("_WrapX", _scoreIconWaveOffset);
+		_scoreIconMaterialLocal.SetFloat("_WrapX", _scoreIconWaveOffset);
 	}
 
 	public void PlayLife(int lifes)
@@ -114,54 +131,47 @@ public class PlayerVisual : MonoBehaviour
 		{
 			scoreText.text = scoreStr;
 
-			var k = (float)score / (float)maxPlayerScore;
+			var k = score / (float)maxPlayerScore;
 			var scale = 1f;//Mathf.Max(k, 0.5f);
 
 			scoreRoot.localScale = new Vector3(scale, scale, 1f);
-			scoreIcon.sharedMaterial.SetFloat("_WrapY", k);
+
+			_scoreIconMaterialLocal.SetFloat("_WrapY", k);
 		}
 	}
 
 	public void PlayIdle()
 	{
-		if (_animator == null)
+		if (_animator != null)
 		{
-			return;
+			_animator.SetTrigger(TRIGGER_IDLE);
 		}
-
-		_animator.SetTrigger(TRIGGER_IDLE);
 	}
 
 	public void PlayJump()
 	{
-		if (_animator == null)
+		if (_animator != null)
 		{
-			return;
+			_animator.SetTrigger(TRIGGER_JUMP);
 		}
-
-		_animator.SetTrigger(TRIGGER_JUMP);
 	}
 
 	public void PlayFall()
 	{
-		if (_animator == null)
+		if (_animator != null)
 		{
-			return;
+			_animator.SetTrigger(TRIGGER_FALL);
 		}
-
-		_animator.SetTrigger(TRIGGER_FALL);
 	}
 
 	public void PlayDie()
 	{
-		if (_animator == null)
+		if (_animator != null)
 		{
-			return;
+			_animator.SetTrigger(TRIGGER_DIE);
+
+			scoreRoot.gameObject.SetActive(false);
 		}
-
-		_animator.SetTrigger(TRIGGER_DIE);
-
-		scoreRoot.gameObject.SetActive(false);
 	}
 
 	public void PlayImmortal(float time)
@@ -169,6 +179,7 @@ public class PlayerVisual : MonoBehaviour
 		if (_immortalAnimation != null)
 		{
 			StopCoroutine(_immortalAnimation);
+
 			_immortalAnimation = null;
 		}
 
@@ -178,7 +189,7 @@ public class PlayerVisual : MonoBehaviour
 
 	private void SetPlayerAlpha(float alpha)
 	{
-		playerMaterial.SetColor("_Color", new Color(1f, 1f, 1f, alpha));
+		_playerMaterialLocal.SetColor("_Color", new Color(1f, 1f, 1f, alpha));
 	}
 
 	private IEnumerator PlayImmortalAnimation(float time)
