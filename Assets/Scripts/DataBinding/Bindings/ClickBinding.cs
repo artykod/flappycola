@@ -7,11 +7,18 @@ namespace DataBinding
     {
         [SerializeField] private string _path;
 
+        private IDataSource _dataSource;
+
+        protected override void BindData(IDataSource dataSource)
+        {
+            _dataSource = dataSource;
+        }
+
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (DataSource != null && DataSource.TryGetNodeByPath<ICommandProperty>(_path, out var commandProperty))
+            if (_dataSource != null && _dataSource.TryGetNodeByPath<ICommandProperty>(_path, out var commandProperty))
             {
-                commandProperty.Execute(DataSource);
+                commandProperty.Execute(_dataSource);
             }
         }
     }

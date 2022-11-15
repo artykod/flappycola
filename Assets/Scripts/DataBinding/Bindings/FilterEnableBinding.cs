@@ -9,14 +9,14 @@ namespace DataBinding
 
         protected override bool HandleChangesWhenInactive => true;
 
-        protected override void FillPathToSubscription(List<string> result)
+        protected override void GatherPathToSubscribe(List<string> result)
         {
             _filter.AppendPathToSubscription(result);
         }
 
-        protected override void BindDataInternal(IDataNode property)
+        protected override void BindData(IDataSource dataSource)
         {
-            gameObject.SetActive(_filter.IsMatch(DataSource));
+            gameObject.SetActive(dataSource != null && _filter.IsMatch(dataSource));
         }
     }
 }

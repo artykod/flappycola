@@ -11,14 +11,21 @@ namespace DataBinding
 
         private GameObject _assetInstance;
 
-        protected override void FillPathToSubscription(List<string> result)
+        protected override void GatherPathToSubscribe(List<string> result)
         {
             result.Add(_path);
         }
 
-        protected override void BindDataInternal(IDataNode property)
+        protected override void BindData(IDataSource dataSource)
         {
-            if (DataSource.TryGetNodeByPath<IDataProperty>(_path, out var valueProperty))
+            if (_assetInstance != null)
+            {
+                Destroy(_assetInstance);
+
+                _assetInstance = null;
+            }
+
+            if (dataSource != null && dataSource.TryGetNodeByPath<IDataProperty>(_path, out var valueProperty))
             {
                 var assetKey = valueProperty.GetValue<string>();
 

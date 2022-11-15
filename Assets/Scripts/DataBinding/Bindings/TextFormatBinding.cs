@@ -28,7 +28,7 @@ namespace DataBinding
 
         private static readonly StringBuilder _cachedStringBuilder = new StringBuilder(128);
 
-        protected override void FillPathToSubscription(List<string> result)
+        protected override void GatherPathToSubscribe(List<string> result)
         {
             if (_isPath)
             {
@@ -41,11 +41,18 @@ namespace DataBinding
             }
         }
 
-        protected override void BindDataInternal(IDataNode property)
+        protected override void BindData(IDataSource dataSource)
         {
+            if (dataSource == null)
+            {
+                ApplyText("");
+
+                return;
+            }
+
             var valueStr = _value;
 
-            if (_isPath && DataSource.TryGetNodeByPath<IDataProperty>(_value, out var valueProperty))
+            if (_isPath && dataSource.TryGetNodeByPath<IDataProperty>(_value, out var valueProperty))
             {
                 valueStr = valueProperty.GetValue<string>();
             }
@@ -55,7 +62,7 @@ namespace DataBinding
 
             foreach (var replacement in _replacementConst)
             {
-                if (DataSource.TryGetNodeByPath<IDataProperty>(replacement.Path, out var replacementProperty))
+                if (dataSource.TryGetNodeByPath<IDataProperty>(replacement.Path, out var replacementProperty))
                 {
                     _cachedStringBuilder.Replace(replacement.Key, replacementProperty.GetValue<string>());
                 }

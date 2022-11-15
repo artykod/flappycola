@@ -12,12 +12,12 @@ namespace DataBinding
         private readonly List<DataContext> _items = new List<DataContext>();
         private readonly List<IDataSource> _filterCache = new List<IDataSource>();
 
-        protected override void FillPathToSubscription(List<string> result)
+        protected override void GatherPathToSubscribe(List<string> result)
         {
             result.Add(_listPath);
         }
 
-        protected override void BindDataInternal(IDataNode property)
+        protected override void BindData(IDataSource dataSource)
         {
             if (_template != null)
             {
@@ -31,7 +31,7 @@ namespace DataBinding
 
             _items.Clear();
 
-            if (!DataSource.TryGetNodeByPath<IDataSource>(_listPath, out var listDataSource))
+            if (dataSource == null || !dataSource.TryGetNodeByPath<IDataSource>(_listPath, out var listDataSource))
             {
                 return;
             }

@@ -7,14 +7,14 @@ namespace DataBinding
     {
         [SerializeField] private string _path;
 
-        protected override void FillPathToSubscription(List<string> result)
+        protected override void GatherPathToSubscribe(List<string> result)
         {
             result.Add(_path);
         }
 
-        protected override void BindDataInternal(IDataNode property)
+        protected override void BindData(IDataSource dataSource)
         {
-            if (DataSource.TryGetNodeByPath<IDataProperty>(_path, out var valueProperty))
+            if (dataSource != null && dataSource.TryGetNodeByPath<IDataProperty>(_path, out var valueProperty))
             {
                 ApplyText(ProcessText(valueProperty.GetValue<string>()));
             }

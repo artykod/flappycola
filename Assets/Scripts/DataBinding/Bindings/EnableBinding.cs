@@ -10,14 +10,15 @@ namespace DataBinding
 
         protected override bool HandleChangesWhenInactive => true;
 
-        protected override void FillPathToSubscription(List<string> result)
+        protected override void GatherPathToSubscribe(List<string> result)
         {
             result.Add(_path);
         }
 
-        protected override void BindDataInternal(IDataNode property)
+        protected override void BindData(IDataSource dataSource)
         {
-            var value = DataSource.TryGetNode<IDataProperty>(_path, out var valueProperty) && valueProperty.GetValue<bool>();
+            var value = dataSource != null && dataSource.TryGetNode<IDataProperty>(_path, out var valueProperty) 
+                && valueProperty.GetValue<bool>();
 
             gameObject.SetActive(value ^ _invert);
         }

@@ -14,42 +14,17 @@ namespace DataBinding
 
         public void SetDataSource(IDataSource dataSource)
         {
+            DataSource = dataSource;
+
             if (!_isBindingsGathered)
             {
                 _isBindingsGathered = true;
                 GatherBindingsRecursive(transform);
-            }
 
-            if (DataSource == dataSource)
-            {
-                return;
-            }
-
-            enabled = false;
-
-            DataSource = dataSource;
-
-            foreach (var binding in _gatheredBindings)
-            {
-                binding.SetDataContext(this);
-            }
-
-            enabled = true;
-        }
-
-        private void OnEnable()
-        {
-            foreach (var binding in _gatheredBindings)
-            {
-                binding.SubscribeToDataSourceChanges();
-            }
-        }
-
-        private void OnDisable()
-        {
-            foreach (var binding in _gatheredBindings)
-            {
-                binding.UnsubscribeFromDataSourceChanges();
+                foreach (var i in _gatheredBindings)
+                {
+                    i.Initialize();
+                }
             }
         }
 
