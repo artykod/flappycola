@@ -5,7 +5,7 @@ namespace DataBinding
 {
     public abstract class BaseDataBinding : MonoBehaviour, IDataObservator
     {
-        private bool _isInitialized;
+        private bool _isInited;
         private bool _isNotFirstEnable;
         private IDataSource _dataSource;
         private readonly List<string> _pathToSubscriptionCache = new List<string>(2);
@@ -15,12 +15,12 @@ namespace DataBinding
 
         public void Initialize()
         {
-            if (_isInitialized)
+            if (_isInited)
             {
                 return;
             }
 
-            _isInitialized = true;
+            _isInited = true;
 
             GatherPathToSubscribe(_pathToSubscriptionCache);
 
