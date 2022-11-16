@@ -14,17 +14,22 @@ namespace DataBinding
 
         public void SetDataSource(IDataSource dataSource)
         {
-            DataSource = dataSource;
-
             if (!_isBindingsGathered)
             {
                 _isBindingsGathered = true;
                 GatherBindingsRecursive(transform);
+            }
 
-                foreach (var i in _gatheredBindings)
-                {
-                    i.Initialize();
-                }
+            if (DataSource == dataSource)
+            {
+                return;
+            }
+
+            DataSource = dataSource;
+
+            foreach (var i in _gatheredBindings)
+            {
+                i.SetDataContext(this);
             }
         }
 
@@ -50,10 +55,7 @@ namespace DataBinding
         {
             target.GetComponents(GatherBindingsCache);
 
-            foreach (var binding in GatherBindingsCache)
-            {
-                _gatheredBindings.Add(binding);
-            }
+            _gatheredBindings.AddRange(GatherBindingsCache);
 
             GatherBindingsCache.Clear();
         }

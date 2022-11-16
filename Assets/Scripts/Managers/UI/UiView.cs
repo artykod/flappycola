@@ -16,24 +16,22 @@ public class UiView : IUiView
 
     public UiView(string prefabName)
     {
-        var assetRequest = Addressables.LoadAssetAsync<GameObject>(prefabName);
+        Addressables.LoadAssetAsync<GameObject>(prefabName).Completed += OnViewLoadComplete;
+    }
 
-        assetRequest.Completed += HandleLoadComplete;
+    private void OnViewLoadComplete(AsyncOperationHandle<GameObject> request)
+    {
+        request.Completed -= OnViewLoadComplete;
 
-        void HandleLoadComplete(AsyncOperationHandle<GameObject> op)
-        {
-            assetRequest.Completed -= HandleLoadComplete;
+        _viewInstance = GameObject.Instantiate(request.Result);
 
-            _viewInstance = GameObject.Instantiate(op.Result);
+        _dataContext = _viewInstance.GetComponent<DataContext>();
 
-            _dataContext = _viewInstance.GetComponent<DataContext>();
+        BindToViewModel();
 
-            BindToViewModel();
+        OnInitialize(_viewInstance);
 
-            OnInitialize(_viewInstance);
-
-            Initialized?.Invoke(this);
-        }
+        Initialized?.Invoke(this);
     }
 
     public void Dispose()

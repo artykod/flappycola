@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace DataBinding
@@ -8,6 +9,10 @@ namespace DataBinding
         [SerializeField] private string _path;
 
         private IDataSource _dataSource;
+
+        protected override void GatherPathToSubscribe(List<string> result)
+        {
+        }
 
         protected override void BindData(IDataSource dataSource)
         {
